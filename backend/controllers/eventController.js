@@ -5,9 +5,13 @@ const getEvents=(req,res)=>{
 }
 
 const createEvent = (req, res) => {
-  res
-    .status(200)
-    .json({ title: "Event 3", description: "This is the first event" });
+  if (req.body.content){
+    res.status(404)
+    throw new Error("Content is required");
+  }
+    res
+      .status(200) 
+      .json({ title: "Event 3", description: "This is the first event" });
 };
 
 const updateEvents = (req, res) => {
