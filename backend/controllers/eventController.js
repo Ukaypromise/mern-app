@@ -31,15 +31,26 @@ const updateEvents = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Event not found");
   }
-  const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, {new:true})
+  const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   res.status(200).json(updatedEvent);
 });
 
 // Delete an event
 const deleteEvents = asyncHandler(async (req, res) => {
-  res
-    .status(200)
-    .json({ title: "Event 1", description: "This is the first event" });
+  const event = await Event.findById(req.params.id);
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+
+  // await event.remove();
+  // res.status(200).json({ id: req.params.id });
+
+  // Alternatively, you can use the following code:
+  const deletedEvent = await Event.findByIdAndDelete(req.params.id)
+  res.status(200).json({deletedEvent, id: req.params.id});
 });
 
 module.exports = {
