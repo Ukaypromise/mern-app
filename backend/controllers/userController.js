@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 
-// @desc    Register a new user
+//Register a new user
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
@@ -34,6 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id)
     });
   } else {
     res.status(400);
@@ -42,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
   res.json({ message: "User Registered" });
 });
 
-// @desc    Authenticate  user
+// Authenticate  user
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
@@ -54,6 +55,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -61,11 +63,17 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get user info
+// Get user info
 // @route   POST /api/users/me
-// @access  Public
+// @access  Private
 const getUser = asyncHandler(async (req, res) => {
   res.json({ message: "User info" });
 });
+
+const generateToken=(id)=>{
+  return jwt.sign({id},process.env.JWT_SECRET,{
+    expiresIn:process.env.JWT_EXPIRES_IN
+  })
+}
 
 module.exports = { registerUser, loginUser, getUser };
