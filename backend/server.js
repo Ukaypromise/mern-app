@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Handle Routes coming from routes folder
 app.use("/api/events", require("./routes/eventRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 // Middleware for error handling
 app.use(errorHandler);
