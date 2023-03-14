@@ -6,6 +6,17 @@ const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({});
   res.status(200).json(events);
 });
+
+// Get a single event
+const getEvent = asyncHandler(async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+  res.status(200).json(event);
+});
+
 // Create a new event
 const createEvent = asyncHandler(async (req, res) => {
   if (!req.body.name) {
@@ -49,12 +60,13 @@ const deleteEvents = asyncHandler(async (req, res) => {
   // res.status(200).json({ id: req.params.id });
 
   // Alternatively, you can use the following code:
-  const deletedEvent = await Event.findByIdAndDelete(req.params.id)
-  res.status(200).json({deletedEvent, id: req.params.id});
+  const deletedEvent = await Event.findByIdAndDelete(req.params.id);
+  res.status(200).json({ deletedEvent, id: req.params.id });
 });
 
 module.exports = {
   getEvents,
+  getEvent,
   createEvent,
   updateEvents,
   deleteEvents,
