@@ -1,30 +1,35 @@
-const getEvents=(req,res)=>{
-    res
-        .status(200)
-        .json({ title: "Event 1", description: "This is the first event" });
-}
+const asyncHandler = require("express-async-handler");
 
-const createEvent = (req, res) => {
-  if (req.body.content){
-    res.status(404)
+// Get all of the events
+const getEvents = asyncHandler(async (req, res) => {
+  res
+    .status(200)
+    .json({ title: "Event 1", description: "This is the first event" });
+});
+// Create a new event
+const createEvent = asyncHandler(async  (req, res) => {
+  if (!req.body.content) {
+    res.status(404);
     throw new Error("Content is required");
   }
-    res
-      .status(200) 
-      .json({ title: "Event 3", description: "This is the first event" });
-};
+  res
+    .status(200)
+    .json({ title: "Event 3", description: "This is the first event" });
+});
 
-const updateEvents = (req, res) => {
+// Update an event
+const updateEvents = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json({ title: "Event 1", description: "This is the first event" });
-};
+});
 
-const deleteEvents = (req, res) => {
+// Delete an event
+const deleteEvents = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json({ title: "Event 1", description: "This is the first event" });
-};
+});
 
 module.exports = {
   getEvents,
