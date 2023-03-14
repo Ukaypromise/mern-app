@@ -26,9 +26,13 @@ const createEvent = asyncHandler(async (req, res) => {
 
 // Update an event
 const updateEvents = asyncHandler(async (req, res) => {
-  res
-    .status(200)
-    .json({ title: "Event 1", description: "This is the first event" });
+  const event = await Event.findById(req.params.id);
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+  const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, {new:true})
+  res.status(200).json(updatedEvent);
 });
 
 // Delete an event
