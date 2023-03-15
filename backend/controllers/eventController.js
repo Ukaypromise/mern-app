@@ -1,9 +1,16 @@
 const asyncHandler = require("express-async-handler");
 const Event = require("../models/eventModel");
+const User = require("../models/userModel");
 
 // Get all of the events
 const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({});
+  res.status(200).json(events);
+});
+
+// Show all user events that they created.
+const userEvents = asyncHandler(async (req, res) => {
+  const events = await Event.find({ user: req.user.id });
   res.status(200).json(events);
 });
 
@@ -24,6 +31,7 @@ const createEvent = asyncHandler(async (req, res) => {
     throw new Error("name of event is required");
   }
   const event = await Event.create({
+    user: req.user.id, // This is the user that is logged in.
     name: req.body.name,
     description: req.body.description,
     registrationEndDate: req.body.registrationEndDate,
@@ -42,6 +50,17 @@ const updateEvents = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Event not found");
   }
+
+  const user = await User.findById(req.user.id);
+  // Check if the user is the owner of the event
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  if (user.id !== event.user.toString()) {
+    res.status(401);
+    throw new Error("You are not authorized to update this event");
+  }
   const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
@@ -55,6 +74,16 @@ const deleteEvents = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Event not found");
   }
+  const user = await User.findById(req.user.id);
+  // Check if the user is the owner of the event
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  if (user.id !== event.user.toString()) {
+    res.status(401);
+    throw new Error("You are not authorized to update this event");
+  }
 
   // await event.remove();
   // res.status(200).json({ id: req.params.id });
@@ -66,6 +95,7 @@ const deleteEvents = asyncHandler(async (req, res) => {
 
 module.exports = {
   getEvents,
+  userEvents,
   getEvent,
   createEvent,
   updateEvents,

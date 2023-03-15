@@ -5,7 +5,7 @@
 
 //Register a new user
 // @route   POST /api/users
-// @access  Public
+// @access  Public 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -67,7 +67,12 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/me
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  res.json({ message: "User info" });
+    const {_id, name, email} = await User.findById(req.user._id);
+    res.status(200).json({
+        _id,
+        name,
+        email
+    })
 });
 
 const generateToken=(id)=>{
