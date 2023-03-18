@@ -45,9 +45,8 @@ export default function Home() {
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Our mission is helping you create amazing conferences and
-              eventsand also connect global event professionals with the latest
-              advances in tech while promoting thought leadership and gathering
-              the event community 365 days per year.
+              events while connecting professionals with the latest
+              advances in tech.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
