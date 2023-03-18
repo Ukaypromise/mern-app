@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import {useSelector, useDispaych} from "react-redux"
+import {useNavigate} from "react-router-dom"
+import {toast} from "react-toastify"
+import {register, reset} from "../features/auth/authSlice"
 import { Link } from "react-router-dom";
 
 
