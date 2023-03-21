@@ -1,9 +1,9 @@
 import { useState } from "react";
-
-import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -11,6 +11,9 @@ const navigation = [
   { name: "Register", href: "/register" },
 ];
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <>
@@ -35,24 +38,63 @@ const Header = () => {
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <div className="hidden lg:flex lg:gap-x-12">
-              {navigation.map((item) => (
+            <ul className="hidden lg:flex lg:gap-x-12">
+              <li>
                 <Link
-                  key={item.name}
-                  to={item.href}
+                  to="/"
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
-                  {item.name}
+                  Home
                 </Link>
-              ))}
-            </div>
+              </li>
+              <li>
+                <Link
+                  to="/events"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  events
+                </Link>
+              </li>
+              {user ? (
+                <>
+                  <li>
+                    <Link
+                      to="/logout"
+                      className="text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      User Profile
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to="/register"
+                      className="text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <Link
-                to="/login"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Log in <span aria-hidden="true">&rarr;</span>
-              </Link>
+              {user ? (
+                <Link
+                  to="/logout"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Log out <span aria-hidden="true">&rarr;</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Log in <span aria-hidden="true">&rarr;</span>
+                </Link>
+              )}
             </div>
           </nav>
           <Dialog
