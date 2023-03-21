@@ -5,11 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Events", href: "/events" },
-  { name: "Register", href: "/register" },
-];
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,7 +16,7 @@ const Header = () => {
     dispatch(logout());
     dispatch(reset());
     navigate("/");
-  }
+  };
 
   return (
     <>
@@ -59,7 +55,15 @@ const Header = () => {
                   to="/events"
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
-                  events
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Blog
                 </Link>
               </li>
               {user ? (
@@ -128,24 +132,59 @@ const Header = () => {
               </div>
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
+                  <ul className="space-y-2 py-6">
+                    <li>
                       <Link
-                        key={item.name}
-                        to={item.href}
+                        to="/"
                         className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       >
-                        {item.name}
+                        Home
                       </Link>
-                    ))}
-                  </div>
+                    </li>
+                    <li>
+                      <Link
+                        to="/events"
+                        className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Events
+                      </Link>
+                    </li>
+                    {user ? (
+                      <li>
+                        <Link
+                          to="/user"
+                          className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        >
+                          User Profile
+                        </Link>
+                      </li>
+                    ) : (
+                      <li>
+                        <Link
+                          to="/register"
+                          className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        >
+                          Register
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
                   <div className="py-6">
-                    <Link
-                      to="/login"
-                      className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Log in
-                    </Link>
+                    {user ? (
+                      <button
+                        onClick={logoutHandler}
+                        className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Logout
+                      </button>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log in
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
