@@ -13,17 +13,9 @@ const register = async (userData) => {
 };
 
 // Logout a user
-// const logout =  () => {
-//   localStorage.removeItem("user");
- 
-// };
-const logout = async (userData) => {
-  const response = await axios.post(API_URL, userData);
-  if (response.data) {
-    localStorage.removeItem("user");
-  }
-  return response.data;
-}
+const logout = () => {
+  localStorage.removeItem("user");
+};
 
 const authService = { register, logout };
 

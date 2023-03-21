@@ -15,6 +15,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  }
+
   return (
     <>
       <div className="bg-white">
@@ -59,7 +66,7 @@ const Header = () => {
                 <>
                   <li>
                     <Link
-                      to="/logout"
+                      to="/user"
                       className="text-sm font-semibold leading-6 text-gray-900"
                     >
                       User Profile
@@ -81,12 +88,12 @@ const Header = () => {
             </ul>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               {user ? (
-                <Link
-                  to="/logout"
+                <button
                   className="text-sm font-semibold leading-6 text-gray-900"
+                  onClick={logoutHandler}
                 >
                   Log out <span aria-hidden="true">&rarr;</span>
-                </Link>
+                </button>
               ) : (
                 <Link
                   to="/login"
