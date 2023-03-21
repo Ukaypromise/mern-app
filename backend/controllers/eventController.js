@@ -49,15 +49,15 @@ const updateEvents = asyncHandler(async (req, res) => {
   if (!event) {
     res.status(404);
     throw new Error("Event not found");
-  }
+  } 
 
-  const user = await User.findById(req.user.id);
+
   // Check if the user is the owner of the event
-  if (!user) {
+  if (!req.user) {
     res.status(404);
     throw new Error("User not found");
   }
-  if (user.id !== event.user.toString()) {
+  if (req.user.id !== event.user.toString()) {
     res.status(401);
     throw new Error("You are not authorized to update this event");
   }
@@ -74,13 +74,13 @@ const deleteEvents = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Event not found");
   }
-  const user = await User.findById(req.user.id);
+  
   // Check if the user is the owner of the event
-  if (!user) {
+  if (!req.user) {
     res.status(404);
     throw new Error("User not found");
   }
-  if (user.id !== event.user.toString()) {
+  if (req.user.id !== event.user.toString()) {
     res.status(401);
     throw new Error("You are not authorized to update this event");
   }
