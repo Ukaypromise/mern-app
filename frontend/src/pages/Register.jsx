@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import {useSelector, useDispaych} from "react-redux"
-import {useNavigate} from "react-router-dom"
-import {toast} from "react-toastify"
-import {register, reset} from "../features/auth/authSlice"
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
-
-
+import Loading from "../components/Loading";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,14 +16,46 @@ const Register = () => {
 
   const { name, email, password, confirm_password } = formData;
 
-  const onChange = (e) =>{
-    // setFormData({...formData, [e.target.name]: e.target.value})
-    setFormData((prevState)=>({
-      ...prevState, [e.target.name]: e.target.value,
-    }))
-  }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
-  const submitForm = (e) => {}
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    if (password !== confirm_password) {
+      toast.error("Password does not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+      dispatch(register(userData));
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
