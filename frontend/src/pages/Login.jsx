@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login, reset } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +14,22 @@ const Login = () => {
 
   const { email, password } = formData;
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const onChange = (e) => {
     // setFormData({...formData, [e.target.name]: e.target.value})
     setFormData((prevState) => ({
@@ -17,7 +38,18 @@ const Login = () => {
     }));
   };
 
-  const submitForm = (e) => {};
+  const submitForm = (e) => {
+    e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -69,7 +101,7 @@ const Login = () => {
             type="submit"
             className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
           >
-            Sign up
+            login
           </button>
           <div className="text-center">
             <a href="/" className="hover:text-indigo-600">
