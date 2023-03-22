@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
+import EventForm from "./pages/EventForm";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/eventform/" element={<EventForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

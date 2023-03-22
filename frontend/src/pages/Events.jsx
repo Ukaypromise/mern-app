@@ -1,8 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import EventForm from "../components/EventForm";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import EventItem from "../components/EventItem";
 import { getEvents, reset } from "../features/events/eventSlice";
@@ -76,7 +75,13 @@ const Events = () => {
             <p>You have not Created any events</p>
           )}
         </div>
-        <EventForm />
+
+        <Link
+          to="/eventform"
+          className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Create Event
+        </Link>
       </div>
     </div>
   );
