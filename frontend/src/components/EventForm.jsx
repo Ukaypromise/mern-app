@@ -1,31 +1,41 @@
-import React from 'react'
-import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createEvent} from "../features/events/eventSlice"
 
 const EventForm = () => {
-    const [formData, setFormData] = useState({
-      name: "",
-      description: "",
-      registrationEndDate: "",
-      startDateTime: "",
-      endDateTime: "",
-      price: "",
-      place: "",
-    });
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    registrationEndDate: "",
+    startDateTime: "",
+    endDateTime: "",
+    price: "",
+    place: "",
+  });
 
-    const { name, description, registrationEndDate, startDateTime, endDateTime, price, place } = formData;
+  const {
+    name,
+    description,
+    registrationEndDate,
+    startDateTime,
+    endDateTime,
+    price,
+    place,
+  } = formData;
+  const dispatch = useDispatch();
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const onChange = (e) => {
-      setFormData((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }));
-    };
-
-    const submitForm = (e) => {
-      e.preventDefault();
-      
-    };
+  const submitForm = (e) => {
+    e.preventDefault();
+    
+    dispatch(createEvent(formData));
+  };
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
       <div className="max-w-sm w-full text-gray-600">
@@ -132,6 +142,6 @@ const EventForm = () => {
       </div>
     </main>
   );
-}
+};
 
-export default EventForm
+export default EventForm;

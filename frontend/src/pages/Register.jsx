@@ -50,6 +50,7 @@ const Register = () => {
         password,
       };
       dispatch(register(userData));
+
     }
   };
 

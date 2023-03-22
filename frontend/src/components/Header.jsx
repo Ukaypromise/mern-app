@@ -52,14 +52,6 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to="/events"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Events
-                </Link>
-              </li>
-              <li>
-                <Link
                   to="/blog"
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
@@ -68,6 +60,14 @@ const Header = () => {
               </li>
               {user ? (
                 <>
+                  <li>
+                    <Link
+                      to="/events"
+                      className="text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Events
+                    </Link>
+                  </li>
                   <li>
                     <Link
                       to="/user"

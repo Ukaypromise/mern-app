@@ -1,18 +1,38 @@
 import React from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import EventForm from "../components/EventForm";
+import Loading from "../components/Loading";
+import EventItem from "../components/EventItem";
+import { getEvents, reset } from "../features/events/eventSlice";
 
 const Events = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { events, isLoading, isError, message } = useSelector(
+    (state) => state.events
+  );
 
   useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
     if (!user) {
       navigate("/login");
     }
-  }, [user, navigate]);
+    dispatch(getEvents());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <div className="px-4 py-16 mt-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -32,12 +52,9 @@ const Events = () => {
               </h2>
             </div>
             <div className="lg:w-1/2">
-              <p className="mb-4 text-base text-gray-700">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque rem aperiam, eaque ipsa quae. Sed ut
-                perspiciatis unde omnis iste. Sed ut perspiciatis unde omnis
-                iste error sit voluptatem accusantium doloremque rem aperiam.
-              </p>
+              <div className="mb-4 text-base text-gray-700">
+                {events.length}
+              </div>
               <a
                 href="/"
                 aria-label=""
@@ -47,6 +64,17 @@ const Events = () => {
               </a>
             </div>
           </div>
+        </div>
+        <div className="mb-4 text-base text-gray-700">
+          {events.length > 0 ? (
+            <div>
+              {events.map((event) => {
+                return <EventItem key={event._id} event={event} />;
+              })}
+            </div>
+          ) : (
+            <p>You have not Created any events</p>
+          )}
         </div>
         <EventForm />
       </div>
