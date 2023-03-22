@@ -66,7 +66,7 @@ const Events = () => {
         </div>
         <div className="mb-4 text-base text-gray-700">
           {events.length > 0 ? (
-            <div>
+            <div className="grid grid-cols-2">
               {events.map((event) => {
                 return <EventItem key={event._id} event={event} />;
               })}
