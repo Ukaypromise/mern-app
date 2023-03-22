@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const EventItem = ({ event }) => {
   return (
@@ -49,7 +50,10 @@ const EventItem = ({ event }) => {
               {event.name}
             </a>
             <p className="text-sm font-medium leading-4 text-gray-600">
-              Author
+              Author{" "}
+              <span className="text-gray-600">
+                {new Date(event.createdAt).toLocaleString("en-US")}
+              </span>
             </p>
           </div>
         </div>

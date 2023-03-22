@@ -33,9 +33,10 @@ const EventForm = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    setFormData([])
+    
 
     dispatch(createEvent(formData));
+    
   };
   return (
     <main className=" mt-20 w-full h-screen flex flex-col items-center justify-center px-4">

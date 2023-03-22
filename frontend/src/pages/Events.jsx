@@ -51,16 +51,17 @@ const Events = () => {
               </h2>
             </div>
             <div className="lg:w-1/2">
-              <div className="mb-4 text-base text-gray-700">
-                {events.length}
+              <div className="mb-4 text-base text-gray-700 text-2xl font-bold leading-5 text-black transition-colors duration-200 hover:text-deep-purple-accent-400">
+                There are currebtly {events.length} upcoming events. You can
+                view and create events.
               </div>
-              <a
-                href="/"
-                aria-label=""
-                className="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
+
+              <Link
+                to="/eventform"
+                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Learn more
-              </a>
+                Create Event
+              </Link>
             </div>
           </div>
         </div>
