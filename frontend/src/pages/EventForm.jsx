@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import {useNavigate} from "react-router-dom"
 import { createEvent } from "../features/events/eventSlice";
 
 const EventForm = () => {
@@ -30,13 +31,11 @@ const EventForm = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+const navigate = useNavigate()
   const submitForm = (e) => {
     e.preventDefault();
-    
-
     dispatch(createEvent(formData));
-    
+    navigate("/events")
   };
   return (
     <main className=" mt-20 w-full h-screen flex flex-col items-center justify-center px-4">

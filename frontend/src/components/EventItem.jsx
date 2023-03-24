@@ -1,24 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import {  useDispatch } from "react-redux";
+import {deleteEvent} from "../features/events/eventSlice"
 
 const EventItem = ({ event }) => {
+
+  const dispatch = useDispatch();
   return (
-    // <div>
-    //   <div>{new Date(event.createdAt).toLocaleString("en-US")}</div>
-    //   <h3>{event.name}</h3>
-    // </div>
     <div className="px-4 py-5  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-5 ">
       <div className="p-8 bg-white border rounded shadow-sm">
-        <p className="mb-3 text-xs font-semibold tracking-wide uppercase">
-          <a
-            href="/"
-            className="transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
-            aria-label="Category"
-          >
-            Date
-          </a>{" "}
-          <span className="text-gray-600">— {event.registrationEndDate}</span>
-        </p>
+        <div className="flex mb-3 text-xs font-semibold tracking-wide uppercase">
+          <button onClick={()=> dispatch(deleteEvent(event._id))} className="flex-end rounded-md bg-orange-400 px-1 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Delete
+          </button>
+        </div>
+
         <a
           href="/"
           aria-label="Article"
@@ -47,10 +42,11 @@ const EventItem = ({ event }) => {
               title="Author"
               className="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400"
             >
-              {event.name}
+              Date:
+              <span className="text-gray-600">{event.registrationEndDate}</span>
             </a>
             <p className="text-sm font-medium leading-4 text-gray-600">
-              Author{" "}
+              Time:
               <span className="text-gray-600">
                 {new Date(event.createdAt).toLocaleString("en-US")}
               </span>
