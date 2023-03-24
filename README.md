@@ -1,10 +1,26 @@
-# Event Scheduler API Documentation
+# EventBite App
 
 Description: This is a simple event scheduler API built with Node.js, Express, MongoDB and Mongoose. It is a simple API that allows users to create events, update events, delete events and get all events. It also allows users to register and login to the application.
 
 ## Live ( deployed version )
 
-Visit [Not available yet!!](https://not-available-ye.com)
+Visit [Not available yet!!](https://not-availablefornow.com)
+### Landing Page
+<img width="1409" alt="Screenshot 2023-03-24 at 15 18 09" src="https://user-images.githubusercontent.com/85847249/227552835-548fc9d9-7756-4c5a-99c8-d28008fba3be.png">
+
+### Register Page
+<img width="855" alt="Screenshot 2023-03-24 at 15 18 34" src="https://user-images.githubusercontent.com/85847249/227555342-5164d950-9430-49b2-b813-ec08834ee937.png">
+
+### Login Page
+<img width="556" alt="Screenshot 2023-03-24 at 15 18 50" src="https://user-images.githubusercontent.com/85847249/227553048-91833c02-7e82-463b-ac71-80cd554c5e94.png">
+
+### Event Page
+<img width="1416" alt="Screenshot 2023-03-24 at 15 19 28" src="https://user-images.githubusercontent.com/85847249/227553049-ef65e830-cd46-434b-870d-b4eec3655246.png">
+
+### Create Event Page
+<img width="1230" alt="Screenshot 2023-03-24 at 15 19 47" src="https://user-images.githubusercontent.com/85847249/227553050-5c79531b-b19c-4695-8d20-5a788271e749.png">
+
+
 
 ## Testing Locally
 
@@ -14,16 +30,31 @@ Clone the repository
 git clone https://github.com/Ukaypromise/mern-app.git
 ```
 
-Change directory to the cloned folder
+Backend
 
 ```console
 cd backend
+
+npm run server
+```
+
+Frontend
+
+```console
+cd frontend
+npm run client
 ```
 
 Install necessary dependency to run the project
 
 ```console
 npm install
+```
+
+To run both the frontend and backend together
+
+```console
+npm run dev
 ```
 
 Create a .env files to set environment variables
@@ -41,6 +72,7 @@ Start the server
 ```console
 nmp run server
 ```
+# EventBite API Documentation
 
 ## Available Endpoint
 
