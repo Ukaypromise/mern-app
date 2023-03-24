@@ -20,7 +20,7 @@ const getEvents = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL, config);
+  const response = await axios.get(API_URL , config);
   return response.data;
 };
 

@@ -4,13 +4,13 @@ const User = require("../models/userModel");
 
 // Get all of the events
 const getEvents = asyncHandler(async (req, res) => {
-  const events = await Event.find({ user: req.user.id });
+  const events = await Event.find({ user: req.user });
   res.status(200).json(events);
 });
 
 // Show all user events that they created.
 const userEvents = asyncHandler(async (req, res) => {
-  const events = await Event.find({ user: req.user.id });
+  const events = await Event.find({ user: req.user });
   res.status(200).json(events);
 });
 
