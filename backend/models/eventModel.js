@@ -18,15 +18,15 @@ const eventSchema = mongoose.Schema(
       required: [true, "Please add a description"],
     },
     registrationEndDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     startDateTime: {
-      type: Date,
+      type: String,
       required: true,
     },
     endDateTime: {
-      type: Date,
+      type: String,
       required: true,
     },
     place: {

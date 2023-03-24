@@ -1,11 +1,11 @@
- const asyncHandler = require("express-async-handler");
- const jwt = require("jsonwebtoken");
- const bcrypt = require("bcryptjs");
- const User = require("../models/userModel");
+const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const User = require("../models/userModel");
 
 //Register a new user
 // @route   POST /api/users
-// @access  Public 
+// @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -67,18 +67,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/me
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-    const {_id, name, email} = await User.findById(req.user._id);
-    res.status(200).json({
-        _id,
-        name,
-        email
-    })
+  res.status(200).json(req.user);
 });
 
-const generateToken=(id)=>{
-  return jwt.sign({id},process.env.JWT_SECRET,{
-    expiresIn:process.env.JWT_EXPIRES_IN
-  })
-}
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
 
 module.exports = { registerUser, loginUser, getUser };
